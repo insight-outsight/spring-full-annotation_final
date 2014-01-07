@@ -1,4 +1,4 @@
-package org.selffun.configs;
+package org.selffun.sfa.configs;
 
 import javax.sql.DataSource;
 
@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
-@PropertySource("classpath:/com/myco/app.properties")
+@PropertySource(value = {"classpath:/properties/db.properties"}) 
 /**
  *@PropertySource("classpath:/com/${my.placeholder:default/path}/app.properties")
  *Any ${...} placeholders present in a @PropertySource resource 
@@ -26,26 +26,11 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
  *If no default is specified and a property cannot be resolved, 
  *an IllegalArgumentException will be thrown.
 **/
-public class DBConfig {
+public class DBConfiguration {
 	
 	@Autowired
     private Environment env;
 	 
-	private @Value("${jdbc.driver}")
-	String driver;
-	private @Value("${jdbc.url}")
-	String url;
-	private @Value("${jdbc.username}")
-	String username;
-	private @Value("${jdbc.password}")
-	String password;
-	
-/*    @Bean
-    public TestBean testBean() {
-        TestBean testBean = new TestBean();
-        testBean.setName(env.getProperty("testbean.name"));
-        return testBean;
-    }*/
 	@Bean
     public DataSource dataSource() {
 		DriverManagerDataSource dataSource = 
@@ -53,10 +38,33 @@ public class DBConfig {
 						env.getProperty("jdbc.url"),
 						env.getProperty("jdbc.username"), 
 						env.getProperty("jdbc.password"));
-		dataSource.setDriverClassName(driver);
+		dataSource.setDriverClassName(env.getProperty("jdbc.driver"));
 		return dataSource;
 	}
-    
+	
+	@Bean
+	public JdbcTemplate jdbcTemplate(){
+		return new JdbcTemplate(dataSource());		
+	}
+	
+/*    @Bean
+    public TestBean testBean() {
+        TestBean testBean = new TestBean();
+        testBean.setName(env.getProperty("testbean.name"));
+        return testBean;
+    }*/
+	
+
+	
+
+/*	private @Value("${jdbc.driver}")
+	String driver;
+	private @Value("${jdbc.url}")
+	String url;
+	private @Value("${jdbc.username}")
+	String username;
+	private @Value("${jdbc.password}")
+	String password;*/
 /*	public @Bean
 	DataSource dataSource() {
 		DriverManagerDataSource dataSource=new DriverManagerDataSource(url, username, password);
@@ -64,9 +72,5 @@ public class DBConfig {
 		return dataSource;
 	}*/
 	
-	public @Bean
-	JdbcTemplate jdbcTemplate(){
-		return new JdbcTemplate(dataSource());
-		
-	}
+
 }

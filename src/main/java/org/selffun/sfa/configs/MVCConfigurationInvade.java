@@ -1,9 +1,9 @@
-package org.selffun.configs;
+package org.selffun.sfa.configs;
 
 import java.lang.reflect.Method;
 import java.util.List;
 
-import org.selffun.DefaultWebApplicationInitializer;
+import org.selffun.sfa.DefaultWebApplicationInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -38,8 +38,8 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @ComponentScan(basePackages = "com.spring.my")
 //@Profile("container") Spring 3.1新增加的<beans>的profile属性，详见spring-beans-3.1.xsd
-@Import(DBConfig.class)
-public class MvcConfigInvade extends WebMvcConfigurerAdapter {
+@Import(DBConfiguration.class)
+public class MVCConfigurationInvade extends WebMvcConfigurerAdapter {
 
 	@Bean
 	public ViewResolver contentNegotiatingViewResolver() {

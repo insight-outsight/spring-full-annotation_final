@@ -1,4 +1,4 @@
-package org.selffun.web.controllers;
+package org.selffun.sfa.web.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

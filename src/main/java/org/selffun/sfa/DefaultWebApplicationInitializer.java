@@ -1,4 +1,4 @@
-package org.selffun;
+package org.selffun.sfa;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,7 +7,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
-import org.selffun.configs.MvcConfig;
+import org.selffun.sfa.configs.MVCConfiguration;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.request.RequestContextListener;
@@ -22,7 +22,7 @@ public class DefaultWebApplicationInitializer implements WebApplicationInitializ
 public void onStartup(ServletContext servletContext) throws ServletException {
 
 	AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-	rootContext.register(MvcConfig.class); 
+	rootContext.register(MVCConfiguration.class); 
 	//rootContext.scan("com.foo"); 
 	rootContext.refresh();
 	
@@ -45,7 +45,7 @@ public void onStartup(ServletContext servletContext) throws ServletException {
 //	map.put("forceEncoding", "true");
 //	servletContext.addFilter("characterEncodingFilter", new CharacterEncodingFilter()).setInitParameters(map);
 //	rootContext.setServletContext(servletContext);
-
 	
 	}
+
 }
