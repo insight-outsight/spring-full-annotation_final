@@ -35,10 +35,10 @@ public class DBConfiguration {
     public DataSource dataSource() {
 		DriverManagerDataSource dataSource = 
 				new DriverManagerDataSource(
-						env.getProperty("jdbc.url"),
-						env.getProperty("jdbc.username"), 
-						env.getProperty("jdbc.password"));
-		dataSource.setDriverClassName(env.getProperty("jdbc.driver"));
+						env.getProperty("demo.db.url"),
+						env.getProperty("demo.db.username"), 
+						env.getProperty("demo.db.password"));
+		dataSource.setDriverClassName(env.getProperty("demo.db.driver"));
 		return dataSource;
 	}
 	

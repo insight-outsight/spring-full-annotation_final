@@ -36,21 +36,30 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.spring.my")
-//@Profile("container") Spring 3.1新增加的<beans>的profile属性，详见spring-beans-3.1.xsd
+@ComponentScan(basePackages = "org.selffun.sfa.web.controllers")
+//@Profile("container") Spring 3.1新增加的<beans>的profile属性，详见
+//spring-beans-3.1.xsd
 @Import(DBConfiguration.class)
 public class MVCConfigurationInvade extends WebMvcConfigurerAdapter {
 
-	@Bean
+/*	@Bean
 	public ViewResolver contentNegotiatingViewResolver() {
 		InternalResourceViewResolver internalResourceViewResolver = new InternalResourceViewResolver();
-		internalResourceViewResolver.setPrefix("/views/");
+		internalResourceViewResolver.setPrefix("/views/jsp/");
 		internalResourceViewResolver.setSuffix(".jsp");
 		internalResourceViewResolver.setViewClass(JstlView.class);
 		return internalResourceViewResolver;
-	}
-
+	}*/
+	
 	@Bean
+	public InternalResourceViewResolver configureInternalResourceViewResolver() {
+		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+		resolver.setPrefix("/views/jsp/");
+		resolver.setSuffix(".jsp");
+		resolver.setViewClass(JstlView.class);//支持JSTL标签
+		return resolver;
+	}
+/*	@Bean
 	public ModelAndViewResolver modelAndViewResolver() {
 		return new ModelAndViewResolver() {
 			@Override
@@ -60,7 +69,7 @@ public class MVCConfigurationInvade extends WebMvcConfigurerAdapter {
 				return UNRESOLVED;
 			}
 		};
-	}
+	}*/
 
 	@Override
 	public void addArgumentResolvers(
@@ -81,21 +90,27 @@ public class MVCConfigurationInvade extends WebMvcConfigurerAdapter {
 		super.addInterceptors(registry);
 	}
 
-	@Override
+/*	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// TODO Auto-generated method stub
 		// registry.addResourceHandler("");
 		super.addResourceHandlers(registry);
-	}
-	/*下面这段是上面有力补充解释
+	}*/
+	
+	/*下面这个方法是上面方法的有力补充解释	 	
+	等价于
+	<mvc:resources mapping="/resources/**" location="/resources/"/>
+	配置
+	*/
 	@Override 
 	public void addResourceHandlers(ResourceHandlerRegistry registry) { 
-		registry.addResourceHandler("/*.html").addResourceLocations("/"); 
-		registry.addResourceHandler("/js/**").addResourceLocations("/js/");
-		registry.addResourceHandler("/css/**").addResourceLocations("/css/"); 
-		registry.addResourceHandler("/img/**").addResourceLocations("/img/"); 
+		//registry.addResourceHandler("/*.html").addResourceLocations("/"); 
+		//registry.addResourceHandler("/js/**").addResourceLocations("/js/");
+		//registry.addResourceHandler("/css/**").addResourceLocations("/css/"); 
+		//registry.addResourceHandler("/img/**").addResourceLocations("/img/");
+		registry.addResourceHandler("/frontend/**").addResourceLocations("/frontend/"); 
 	} 
-	*/	 
+	
 	@Override
 	public void addReturnValueHandlers(
 			List<HandlerMethodReturnValueHandler> returnValueHandlers) {
@@ -124,7 +139,7 @@ public class MVCConfigurationInvade extends WebMvcConfigurerAdapter {
 		super.configureHandlerExceptionResolvers(exceptionResolvers);
 	}
 
-	@SuppressWarnings("rawtypes")
+/*	@SuppressWarnings("rawtypes")
 	@Override
 	public void configureMessageConverters(
 			List<HttpMessageConverter<?>> converters) {
@@ -142,6 +157,6 @@ public class MVCConfigurationInvade extends WebMvcConfigurerAdapter {
 		// TODO Auto-generated method stub
 		Validator v = super.getValidator();
 		return v;
-	}
+	}*/
 
 }

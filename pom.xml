@@ -1,17 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   	<modelVersion>4.0.0</modelVersion>
-  	<groupId>org.selffun</groupId>
+  	<groupId>org.selffun.sfa</groupId>
   	<!-- 改groupId和artifactId -->
-  	<artifactId>SpringZeroConfiguration</artifactId>
+  	<artifactId>spring-full-annotation</artifactId>
   	<version>0.0.1-SNAPSHOT</version>
   	<packaging>war</packaging>
-  	<name>pringZeroConfiguration</name>
-  	<description>A Spring Zero Configuration。</description>
+  	<name>SpringFullAnnotation</name>
+  	<description>A Spring Full Annotation Configuration。</description>
   
 	<properties>
 		<build.resourceEncoding>UTF-8</build.resourceEncoding>
 		<package.dir>${basedir}/target</package.dir>
-		<package.name>szc-pub</package.name>
+		<package.name>${project.artifactId}</package.name>
 		<spring.version>3.1.1.RELEASE</spring.version>         
 	</properties>
 	

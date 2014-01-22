@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 @Configuration 
-@ImportResource( { "classpath:/spring/security.xml" } ) 
+//@ImportResource( { "classpath:/spring/security.xml" } ) 
 @PropertySource(value = { "classpath:/properties/db.properties"}) 
 public class ApplicationConfiguration {
 
