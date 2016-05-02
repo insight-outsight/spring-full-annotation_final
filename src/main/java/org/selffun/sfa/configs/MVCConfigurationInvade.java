@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import org.selffun.sfa.DefaultWebApplicationInitializer;
+import org.selffun.sfa.configs.customcomponent.FormModelHandlerMethodArgumentResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +15,7 @@ import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.SourceHttpMessageConverter;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.validation.Validator;
@@ -33,6 +34,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.mvc.annotation.ModelAndViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+
+/**because this class extends WebMvcConfigurerAdapter,so marked as Invade.*/
 
 @Configuration
 @EnableWebMvc
@@ -59,6 +62,7 @@ public class MVCConfigurationInvade extends WebMvcConfigurerAdapter {
 		resolver.setViewClass(JstlView.class);//支持JSTL标签
 		return resolver;
 	}
+	
 /*	@Bean
 	public ModelAndViewResolver modelAndViewResolver() {
 		return new ModelAndViewResolver() {
@@ -71,13 +75,29 @@ public class MVCConfigurationInvade extends WebMvcConfigurerAdapter {
 		};
 	}*/
 
+	
+	/**
+	 * 等价于
+	 * <mvc:annotation-driven>  
+    		<mvc:argument-resolvers>  
+        		<bean class="xxx.yyy.CurrentUserHandlerMethodArgumentResolver" />  
+    		</mvc:argument-resolvers>  
+		</mvc:annotation-driven> 
+	 */
 	@Override
 	public void addArgumentResolvers(
 			List<HandlerMethodArgumentResolver> argumentResolvers) {
-		// TODO Auto-generated method stub
+		argumentResolvers.add(new FormModelHandlerMethodArgumentResolver());
 		super.addArgumentResolvers(argumentResolvers);
 	}
 
+	@Override
+	public void addReturnValueHandlers(
+			List<HandlerMethodReturnValueHandler> returnValueHandlers) {
+		// TODO Auto-generated method stub
+		super.addReturnValueHandlers(returnValueHandlers);
+	}
+	
 	@Override
 	public void addFormatters(FormatterRegistry registry) {
 		// TODO Auto-generated method stub
@@ -98,9 +118,7 @@ public class MVCConfigurationInvade extends WebMvcConfigurerAdapter {
 	}*/
 	
 	/*下面这个方法是上面方法的有力补充解释	 	
-	等价于
-	<mvc:resources mapping="/resources/**" location="/resources/"/>
-	配置
+	等价于配置<mvc:resources mapping="/resources/**" location="/resources/"/>
 	*/
 	@Override 
 	public void addResourceHandlers(ResourceHandlerRegistry registry) { 
@@ -111,12 +129,7 @@ public class MVCConfigurationInvade extends WebMvcConfigurerAdapter {
 		registry.addResourceHandler("/frontend/**").addResourceLocations("/frontend/"); 
 	} 
 	
-	@Override
-	public void addReturnValueHandlers(
-			List<HandlerMethodReturnValueHandler> returnValueHandlers) {
-		// TODO Auto-generated method stub
-		super.addReturnValueHandlers(returnValueHandlers);
-	}
+
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
